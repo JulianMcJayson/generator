@@ -5,7 +5,7 @@ import (
 	"math/rand"
 	"strings"
 
-	"julian/genrator/pkg/generator/helper"
+	"github.com/JulianMcJayson/genrator/pkg/generator/helper"
 
 	"github.com/google/uuid"
 )

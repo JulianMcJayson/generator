@@ -1,4 +1,4 @@
-module julian/genrator
+module github.com/JulianMcJayson/generator
 
 go 1.24.2
 
