@@ -20,3 +20,9 @@ func AssertGenerator(t testing.TB, got string, err error) {
 		t.Error()
 	}
 }
+
+func BenchmarkTest(b *testing.B) {
+	for b.Loop() {
+		Generate()
+	}
+}
