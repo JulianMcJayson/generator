@@ -1,7 +1,7 @@
 ## Generator
 Strong password generation.
 ## Install
-use `go get github.com/JulianMcJayson/generator/generator` for installing.
+use `go get github.com/JulianMcJayson/generator` for installing.
 then import using
 ```
 import (
