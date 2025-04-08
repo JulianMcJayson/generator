@@ -5,8 +5,6 @@ import (
 	"math/rand"
 	"strings"
 
-	"github.com/JulianMcJayson/generator/pkg/helper"
-
 	"github.com/google/uuid"
 )
 
@@ -23,7 +21,7 @@ func Generate() (string, error) {
 	}
 	unpackPassword := rawPassword.String()
 	limitNumberLength := len(rawPassword) - 1
-	countNumber := helper.CountInt(unpackPassword)
+	countNumber := CountInt(unpackPassword)
 
 	for countNumber > limitNumberLength {
 		newRawPassword, err := uuid.NewUUID()
@@ -31,15 +29,15 @@ func Generate() (string, error) {
 			return "", err
 		}
 		unpackPassword = newRawPassword.String()
-		countNumber = helper.CountInt(unpackPassword)
+		countNumber = CountInt(unpackPassword)
 	}
 
 	splitPassword := strings.Split(unpackPassword, "-")
 	randMiddle := rand.Intn(2) + 1
 	middlePassword := splitPassword[randMiddle]
 	groundPasswordSplit := splitPassword[0] + splitPassword[len(splitPassword)-1]
-	trackRandom := helper.IntDictionary{}
-	trackRandomChannel := make(chan helper.IntDictionary)
+	trackRandom := IntDictionary{}
+	trackRandomChannel := make(chan IntDictionary)
 	if PASSWORD_LENGTH > len(groundPasswordSplit) {
 		PASSWORD_LENGTH = len(groundPasswordSplit)
 	}
@@ -57,7 +55,7 @@ func Generate() (string, error) {
 		trackRandom = add
 	}
 
-	groundPassword = helper.RandomUpper(groundPassword)
+	groundPassword = RandomUpper(groundPassword)
 
 	middlePlacement := rand.Intn(9)
 	if middlePlacement >= 4 {
@@ -66,8 +64,8 @@ func Generate() (string, error) {
 		middlePlacement = 0
 	}
 
-	arrayPlacement := helper.StringDictionary{groundPassword}
-	arrayPlacementChannel := make(chan helper.StringDictionary)
+	arrayPlacement := StringDictionary{groundPassword}
+	arrayPlacementChannel := make(chan StringDictionary)
 	go func() {
 		arrayPlacementChannel <- arrayPlacement.Insert(middlePassword, middlePlacement)
 	}()
@@ -78,8 +76,8 @@ func Generate() (string, error) {
 		arrayToStringPassword += i
 	}
 
-	trackShuffle := helper.IntDictionary{}
-	trackShuffleChannel := make(chan helper.IntDictionary)
+	trackShuffle := IntDictionary{}
+	trackShuffleChannel := make(chan IntDictionary)
 	for range len(arrayToStringPassword) / 2 {
 		begin := rand.Intn(len(arrayToStringPassword))
 		target := rand.Intn(len(arrayToStringPassword))
@@ -90,7 +88,7 @@ func Generate() (string, error) {
 			begin = rand.Intn(len(arrayToStringPassword))
 		}
 
-		arrayToStringPassword = helper.Swap(
+		arrayToStringPassword = Swap(
 			arrayToStringPassword,
 			string(arrayToStringPassword[begin]),
 			string(arrayToStringPassword[target]),
@@ -106,7 +104,7 @@ func Generate() (string, error) {
 		trackShuffle = add
 	}
 
-	spacialPassword := helper.RandomSpacialChar(arrayToStringPassword)
+	spacialPassword := RandomSpacialChar(arrayToStringPassword)
 
 	password := spacialPassword
 	return password, nil
