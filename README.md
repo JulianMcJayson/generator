@@ -10,4 +10,7 @@ import (
 
 password, err := generator.Generate()
 ```
+## Performance
+This library can generate up to 27,693 password per second.
+___
 Thank you.
